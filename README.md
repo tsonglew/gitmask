@@ -43,6 +43,35 @@ npm run build
 npm link
 ```
 
+### Verify installation
+
+```bash
+gitmask --version
+# Should output: 1.0.0
+```
+
+### Quick start
+
+After installation, follow these quick steps to get started:
+
+```bash
+# 1. Initialize the config
+gitmask init
+
+# 2. Add your GitHub account
+gitmask add github.com "Your GitHub Name" "your-github-email@example.com"
+
+# 3. Install shell integration (recommended)
+gitmask install-shell
+
+# 4. Restart your shell or reload config
+# For fish: source ~/.config/fish/config.fish
+# For zsh: source ~/.zshrc
+# For bash: source ~/.bash_profile or source ~/.bashrc
+```
+
+Now whenever you `cd` into a git repository, gitmask will automatically set the correct git user info!
+
 ## Usage
 
 ### 1. Initialize config
