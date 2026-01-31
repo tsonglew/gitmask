@@ -14,13 +14,30 @@ No more wrong emails in your commits - automatically set git user info based on 
 
 ## Installation
 
+### Install from GitHub
+
 ```bash
-npm install -g gitmask
+npm install -g tsonglew/gitmask
 ```
 
-Or build from source:
+If `gitmask` command is not found after installation, you may need to add npm global bin to your PATH:
 
 ```bash
+# Find npm global bin path
+npm bin -g
+
+# Add to PATH (example for fish)
+fish_add_path (npm bin -g)
+
+# For bash/zsh, add to your ~/.bashrc or ~/.zshrc:
+export PATH="$(npm bin -g):$PATH"
+```
+
+### Build from source
+
+```bash
+git clone https://github.com/tsonglew/gitmask.git
+cd gitmask
 npm install
 npm run build
 npm link
