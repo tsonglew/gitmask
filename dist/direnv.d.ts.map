@@ -1,0 +1,1 @@
+{"version":3,"file":"direnv.d.ts","sourceRoot":"","sources":["../src/direnv.ts"],"names":[],"mappings":"AAIA,qBAAa,aAAa;IACxB,OAAO,CAAC,MAAM,CAAC,YAAY;IAK3B,MAAM,CAAC,YAAY,IAAI,OAAO;IAuB9B,MAAM,CAAC,cAAc,IAAI,OAAO;IAwBhC,MAAM,CAAC,gBAAgB,IAAI,OAAO;CAanC"}

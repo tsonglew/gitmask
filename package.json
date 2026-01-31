@@ -6,6 +6,13 @@
   "bin": {
     "gitmask": "./bin/gitmask"
   },
+  "files": [
+    "dist",
+    "bin",
+    "LICENSE",
+    "README.md",
+    "package.json"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
