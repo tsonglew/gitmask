@@ -20,17 +20,67 @@ No more wrong emails in your commits - automatically set git user info based on 
 npm install -g tsonglew/gitmask
 ```
 
-If `gitmask` command is not found after installation, you may need to add npm global bin to your PATH:
+### Verify Installation
+
+After installation, check if gitmask is available:
 
 ```bash
-# Find npm global bin path
+gitmask --version
+# Should output: 1.0.0
+```
+
+If `gitmask` command is not found, continue with the troubleshooting steps below.
+
+### Troubleshooting
+
+#### Step 1: Check npm global bin location
+
+```bash
 npm bin -g
+# Example output: /usr/local/lib/node_modules/.bin
+# or: /Users/yourname/.npm-global/bin
+```
 
-# Add to PATH (example for fish)
+#### Step 2: Check if gitmask binary exists
+
+```bash
+# Replace with your npm global bin path from Step 1
+ls $(npm bin -g)/gitmask
+# Should show: gitmask
+```
+
+If the file doesn't exist, the installation failed. Try reinstalling:
+
+```bash
+npm uninstall -g gitmask
+npm install -g tsonglew/gitmask
+```
+
+#### Step 3: Add npm global bin to your PATH
+
+If the binary exists but `gitmask` command is not found, your shell doesn't know where to find it. Add npm global bin to your PATH:
+
+**For fish:**
+```bash
 fish_add_path (npm bin -g)
+```
 
-# For bash/zsh, add to your ~/.bashrc or ~/.zshrc:
-export PATH="$(npm bin -g):$PATH"
+**For zsh:**
+```bash
+echo 'export PATH="$(npm bin -g):$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+**For bash:**
+```bash
+echo 'export PATH="$(npm bin -g):$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+#### Step 4: Verify again
+
+```bash
+gitmask --version
 ```
 
 ### Build from source
