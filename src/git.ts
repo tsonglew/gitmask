@@ -1,5 +1,7 @@
 import { execSync } from 'child_process';
 import { URL } from 'url';
+import * as path from 'path';
+import * as fs from 'fs';
 
 export interface GitRemote {
   name: string;
@@ -13,9 +15,27 @@ export interface UserInfo {
 }
 
 export class GitUtil {
+  private static resolveSafePath(basePath: string, targetPath?: string): string {
+    if (!targetPath) {
+      return path.resolve(basePath);
+    }
+
+    const resolved = path.resolve(basePath, targetPath);
+
+    if (!resolved.startsWith(basePath)) {
+      throw new Error('Path traversal attempt detected');
+    }
+
+    return resolved;
+  }
+
   static getCurrentRepoPath(): string {
     try {
-      return execSync('git rev-parse --show-toplevel', { encoding: 'utf-8' }).trim();
+      const repoPath = execSync('git rev-parse --show-toplevel', { encoding: 'utf-8' }).trim();
+      if (!fs.existsSync(repoPath)) {
+        throw new Error('Invalid git repository path');
+      }
+      return repoPath;
     } catch {
       throw new Error('Not a git repository');
     }
@@ -83,9 +103,14 @@ export class GitUtil {
   }
 
   static setUserConfig(user: UserInfo, repoPath?: string): void {
-    const workDir = repoPath || this.getCurrentRepoPath();
-    execSync(`git config user.name "${user.name}"`, { cwd: workDir });
-    execSync(`git config user.email "${user.email}"`, { cwd: workDir });
+    const workDir = this.resolveSafePath(repoPath || this.getCurrentRepoPath());
+    const escapeShellArg = (arg: string): string => {
+      return arg.replace(/'/g, "'\\''");
+    };
+    const escapedName = escapeShellArg(user.name);
+    const escapedEmail = escapeShellArg(user.email);
+    execSync(`git config user.name '${escapedName}'`, { cwd: workDir });
+    execSync(`git config user.email '${escapedEmail}'`, { cwd: workDir });
   }
 
   static isInsideGitRepo(): boolean {

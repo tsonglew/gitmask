@@ -71,7 +71,27 @@ export class ConfigManager {
     fs.writeFileSync(configPath, content, 'utf-8');
   }
 
+  private static validateDomain(domain: string): boolean {
+    const domainRegex = /^[a-zA-Z0-9][a-zA-Z0-9.-]*[a-zA-Z0-9]$/;
+    return domainRegex.test(domain);
+  }
+
+  private static validateEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
   static addMapping(domain: string, name: string, email: string): void {
+    if (!this.validateDomain(domain)) {
+      throw new Error('Invalid domain format');
+    }
+    if (!name || name.trim() === '') {
+      throw new Error('Name cannot be empty');
+    }
+    if (!this.validateEmail(email)) {
+      throw new Error('Invalid email format');
+    }
+
     const config = this.load();
     const existingIndex = config.mappings.findIndex(m => m.domain === domain);
 
@@ -115,6 +135,13 @@ export class ConfigManager {
   }
 
   static setDefault(name: string, email: string): void {
+    if (!name || name.trim() === '') {
+      throw new Error('Name cannot be empty');
+    }
+    if (!this.validateEmail(email)) {
+      throw new Error('Invalid email format');
+    }
+
     const config = this.load();
     config.default = { name, email };
     this.save(config);

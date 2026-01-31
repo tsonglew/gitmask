@@ -95,6 +95,10 @@ fi
     return `# <<< gitmask ${shellType} <<<`;
   }
 
+  private static escapeRegex(str: string): string {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
   static installShellIntegration(): boolean {
     try {
       const shellType = this.getShellType();
@@ -159,7 +163,9 @@ fi
         return false;
       }
 
-      const regex = new RegExp(`\\s*${markStart}[\\s\\S]*?${markEnd}\\s*`, 'g');
+      const escapedMarkStart = this.escapeRegex(markStart);
+      const escapedMarkEnd = this.escapeRegex(markEnd);
+      const regex = new RegExp(`\\s*${escapedMarkStart}[\\s\\S]*?${escapedMarkEnd}\\s*`, 'g');
       const newContent = content.replace(regex, '\n');
       fs.writeFileSync(configPath, newContent.trim() + '\n', 'utf-8');
 

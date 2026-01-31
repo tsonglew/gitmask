@@ -94,8 +94,15 @@ program
   .command('add <domain> <name> <email>')
   .description('Add a domain to user mapping')
   .action((domain, name, email) => {
-    ConfigManager.addMapping(domain, name, email);
-    console.log(`✓ Added mapping: ${domain} -> ${name} <${email}>`);
+    try {
+      ConfigManager.addMapping(domain, name, email);
+      console.log(`✓ Added mapping: ${domain} -> ${name} <${email}>`);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(`✗ Error: ${error.message}`);
+      }
+      process.exit(1);
+    }
   });
 
 program
@@ -114,8 +121,15 @@ program
   .command('set-default <name> <email>')
   .description('Set default user info (used when no domain matches)')
   .action((name, email) => {
-    ConfigManager.setDefault(name, email);
-    console.log(`✓ Set default user: ${name} <${email}>`);
+    try {
+      ConfigManager.setDefault(name, email);
+      console.log(`✓ Set default user: ${name} <${email}>`);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(`✗ Error: ${error.message}`);
+      }
+      process.exit(1);
+    }
   });
 
 program
