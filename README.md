@@ -1,2 +1,164 @@
 # gitmask
-No more wrong emails in your commits
+
+No more wrong emails in your commits - automatically set git user info based on git remote domain.
+
+## Features
+
+- Automatically detect git remote domain and set corresponding `user.name` and `user.email`
+- Support multiple git remotes (GitHub, GitLab, self-hosted, etc.)
+- Default user configuration for unmapped domains
+- Git hook integration (pre-commit)
+- Shell integration (fish, bash, zsh) for automatic config on directory change
+- CLI for manual control
+- JSON configuration file
+
+## Installation
+
+```bash
+npm install -g gitmask
+```
+
+Or build from source:
+
+```bash
+npm install
+npm run build
+npm link
+```
+
+## Usage
+
+### 1. Initialize config
+
+```bash
+gitmask init
+```
+
+This creates `~/.config/gitmask/config.json` configuration file.
+
+### 2. Add domain mappings
+
+```bash
+gitmask add github.com "Your Name" "your-github-email@example.com"
+gitmask add gitlab.com "Your Name" "your-gitlab-email@example.com"
+gitmask add github.company.com "Work Name" "work@company.com"
+```
+
+### 3. List all mappings
+
+```bash
+gitmask list
+```
+
+### 4. Check and set git user info
+
+```bash
+gitmask check
+```
+
+This command:
+- Detects the current git remote
+- Finds the matching user mapping
+- Updates `git config user.name` and `git config user.email` if needed
+
+### 5. Install git hook (optional)
+
+```bash
+gitmask install-hook
+```
+
+This installs a pre-commit hook that automatically checks and sets user info before each commit.
+
+### 6. Install shell integration (optional, recommended)
+
+```bash
+gitmask install-shell
+```
+
+This installs shell integration that automatically checks and sets git user info when you enter a git repository. Supports fish, bash, and zsh.
+
+After installation, restart your shell or run:
+- fish: `source ~/.config/fish/config.fish`
+- bash: `source ~/.bash_profile` or `source ~/.bashrc`
+- zsh: `source ~/.zshrc`
+
+### 7. Set default user (optional)
+
+```bash
+gitmask set-default "Default Name" "default@example.com"
+```
+
+This sets a default user that will be used when no domain mapping matches.
+
+### 8. Clear default user
+
+```bash
+gitmask clear-default
+```
+
+### 9. Remove a mapping
+
+```bash
+gitmask remove github.com
+```
+
+### 10. Uninstall git hook
+
+```bash
+gitmask uninstall-hook
+```
+
+### 11. Uninstall shell integration
+
+```bash
+gitmask uninstall-shell
+```
+
+## Configuration
+
+The configuration file is stored at `~/.config/gitmask/config.json`:
+
+```json
+{
+  "mappings": [
+    {
+      "domain": "github.com",
+      "user": {
+        "name": "Your GitHub Name",
+        "email": "your-github-email@example.com"
+      }
+    },
+    {
+      "domain": "gitlab.com",
+      "user": {
+        "name": "Your GitLab Name",
+        "email": "your-gitlab-email@example.com"
+      }
+    }
+  ],
+  "default": {
+    "name": "Default Name",
+    "email": "default@example.com"
+  }
+}
+```
+
+The `default` field is optional. When specified, it will be used when no domain mapping matches the current git remote.
+
+## How it works
+
+1. Gitmask reads the current git repository's remote URL
+2. Extracts the domain from the remote URL
+3. Looks up the domain in the configuration file
+4. If a matching domain is found, uses its user info; otherwise, falls back to the default user (if configured)
+5. Sets `user.name` and `user.email` for the current repository
+
+## Supported remote formats
+
+- HTTPS: `https://github.com/user/repo.git`
+- SSH: `git@github.com:user/repo.git`
+- Custom domains: `https://github.company.com/user/repo.git`
+
+## License
+
+MIT

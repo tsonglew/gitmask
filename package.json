@@ -1,0 +1,37 @@
+{
+  "name": "gitmask",
+  "version": "1.0.0",
+  "description": "No more wrong emails in your commits - automatically set git user info based on remote",
+  "main": "dist/index.js",
+  "bin": {
+    "gitmask": "./bin/gitmask"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "install-hook": "node dist/index.js install-hook",
+    "uninstall-hook": "node dist/index.js uninstall-hook",
+    "install-shell": "node dist/index.js install-shell",
+    "uninstall-shell": "node dist/index.js uninstall-shell",
+    "check": "node dist/index.js check"
+  },
+  "keywords": [
+    "git",
+    "config",
+    "user",
+    "email",
+    "hook",
+    "cli"
+  ],
+  "author": "Tsonglew",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.0.0",
+    "simple-git": "^3.20.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.0"
+  }
+}

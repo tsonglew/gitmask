@@ -1,0 +1,29 @@
+{
+  "mappings": [
+    {
+      "domain": "github.com",
+      "user": {
+        "name": "Your GitHub Name",
+        "email": "your-github-email@example.com"
+      }
+    },
+    {
+      "domain": "gitlab.com",
+      "user": {
+        "name": "Your GitLab Name",
+        "email": "your-gitlab-email@example.com"
+      }
+    },
+    {
+      "domain": "github.company.com",
+      "user": {
+        "name": "Your Work Name",
+        "email": "work@company.com"
+      }
+    }
+  ],
+  "default": {
+    "name": "Default Name",
+    "email": "default@example.com"
+  }
+}
