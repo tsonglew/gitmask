@@ -14,13 +14,40 @@ No more wrong emails in your commits - automatically set git user info based on 
 
 ## Installation
 
-### Install from GitHub
+### Build from source (recommended)
+
+```bash
+git clone https://github.com/tsonglew/gitmask.git
+cd gitmask
+npm install
+npm run build
+npm link
+```
+
+**Why build from source?**
+- Ensures you have all the required files
+- Works with all npm versions
+- No installation issues
+
+### Install from GitHub (experimental)
 
 ```bash
 npm install -g tsonglew/gitmask
 ```
 
-### Verify Installation
+**Note:** This method may not work reliably in all environments. If you encounter issues, please use the build from source method above.
+
+### Try without installing (using npx)
+
+```bash
+npx tsonglew/gitmask --version
+npx tsonglew/gitmask init
+npx tsonglew/gitmask add github.com "Your Name" "your-github-email@example.com"
+```
+
+Use this if you want to try gitmask without installing it globally. Note that shell integration requires global installation.
+
+### Verify Installation (for build from source or npm install)
 
 After installation, check if gitmask is available:
 
@@ -29,7 +56,7 @@ gitmask --version
 # Should output: 1.0.0
 ```
 
-If `gitmask` command is not found, continue with the troubleshooting steps below.
+If `gitmask` command is not found, continue with troubleshooting steps below.
 
 ### Troubleshooting
 
