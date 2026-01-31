@@ -36,16 +36,17 @@ If `gitmask` command is not found, continue with the troubleshooting steps below
 #### Step 1: Check npm global bin location
 
 ```bash
-npm bin -g
-# Example output: /usr/local/lib/node_modules/.bin
-# or: /Users/yourname/.npm-global/bin
+npm config get prefix
+# Example output: /usr/local/lib/node_modules
+# or: /Users/yourname/.npm-global
 ```
+
+Then the bin directory is: `(npm config get prefix)/bin`
 
 #### Step 2: Check if gitmask binary exists
 
 ```bash
-# Replace with your npm global bin path from Step 1
-ls $(npm bin -g)/gitmask
+ls $(npm config get prefix)/bin/gitmask
 # Should show: gitmask
 ```
 
@@ -62,18 +63,18 @@ If the binary exists but `gitmask` command is not found, your shell doesn't know
 
 **For fish:**
 ```bash
-fish_add_path (npm bin -g)
+fish_add_path $(npm config get prefix)/bin
 ```
 
 **For zsh:**
 ```bash
-echo 'export PATH="$(npm bin -g):$PATH"' >> ~/.zshrc
+echo 'export PATH="$(npm config get prefix)/bin:$PATH"' >> ~/.zshrc
 source ~/.zshrc
 ```
 
 **For bash:**
 ```bash
-echo 'export PATH="$(npm bin -g):$PATH"' >> ~/.bashrc
+echo 'export PATH="$(npm config get prefix)/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
